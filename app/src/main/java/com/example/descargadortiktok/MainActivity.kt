@@ -89,17 +89,18 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Animación RGB Glow
+                // Animación RGB Glow para el contorno de la imagen PNG
                 val infiniteTransition = rememberInfiniteTransition(label = "rgbGlow")
-                val angle by infiniteTransition.animateFloat(
+                val hue by infiniteTransition.animateFloat(
                     initialValue = 0f,
                     targetValue = 360f,
                     animationSpec = infiniteRepeatable(
-                        animation = tween(3000, easing = LinearEasing),
+                        animation = tween(2500, easing = LinearEasing),
                         repeatMode = RepeatMode.Restart
                     ),
-                    label = "angle"
+                    label = "hue"
                 )
+                val animatedColor = Color.hsv(hue = hue, saturation = 1f, value = 1f)
 
                 // Custom Top Header Libre de Recortes
                 Box(
@@ -109,34 +110,31 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     contentAlignment = Alignment.Center
                 ) {
                     Box(
-                        modifier = Modifier
-                            .size(190.dp)
-                            .drawBehind {
-                                rotate(angle) {
-                                    drawCircle(
-                                        brush = Brush.sweepGradient(
-                                            colors = listOf(
-                                                Color(0xFFFF004D), // Rosa TikTok
-                                                Color(0xFFB100FF), // Morado
-                                                Color(0xFF00E5FF), // Cyan TikTok
-                                                Color(0xFF00FF44), // Verde Neón
-                                                Color(0xFFFFFF00), // Amarillo
-                                                Color(0xFFFF004D)  // Cierra con Rosa
-                                            )
-                                        ),
-                                        radius = size.width / 2,
-                                        style = Stroke(width = 8.dp.toPx())
-                                    )
-                                }
-                            },
+                        modifier = Modifier.size(190.dp),
                         contentAlignment = Alignment.Center
                     ) {
+                        // Borde RGB que sigue el contorno exacto del PNG
+                        val offsets = listOf(
+                            Pair(-3, -3), Pair(0, -4), Pair(3, -3),
+                            Pair(-4, 0),               Pair(4, 0),
+                            Pair(-3, 3),  Pair(0, 4),  Pair(3, 3)
+                        )
+                        for (offset in offsets) {
+                            Image(
+                                painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                                contentDescription = null,
+                                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(animatedColor),
+                                modifier = Modifier
+                                    .size(175.dp)
+                                    .offset(x = offset.first.dp, y = offset.second.dp)
+                            )
+                        }
+                        
+                        // Imagen original encima
                         Image(
                             painter = painterResource(id = R.drawable.icono_24k_ceviche),
                             contentDescription = "24K Ceviche",
-                            modifier = Modifier
-                                .size(175.dp)
-                                .clip(CircleShape)
+                            modifier = Modifier.size(175.dp)
                         )
                     }
                     
