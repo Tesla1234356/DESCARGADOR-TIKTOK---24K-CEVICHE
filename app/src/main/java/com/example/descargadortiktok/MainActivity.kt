@@ -62,31 +62,7 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
     val scrollState = rememberScrollState()
 
     Scaffold(
-        containerColor = Color(0xFF0F0F12),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Image(
-                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
-                        contentDescription = "24K Ceviche",
-                        modifier = Modifier
-                            .size(96.dp)
-                            .offset(y = 12.dp)
-                    )
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFF0F0F12),
-                    titleContentColor = Color.White
-                ),
-                actions = {
-                    if (viewModel.downloadState !is DownloadState.Idle) {
-                        IconButton(onClick = { viewModel.reset() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Reiniciar", tint = Color(0xFFFE2C55))
-                        }
-                    }
-                }
-            )
-        }
+        containerColor = Color(0xFF0F0F12)
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -109,6 +85,29 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Custom Top Header Libre de Recortes
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp, bottom = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                        contentDescription = "24K Ceviche",
+                        modifier = Modifier.size(110.dp)
+                    )
+                    
+                    if (viewModel.downloadState !is DownloadState.Idle) {
+                        IconButton(
+                            onClick = { viewModel.reset() },
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        ) {
+                            Icon(Icons.Default.Refresh, contentDescription = "Reiniciar", tint = Color(0xFFFE2C55))
+                        }
+                    }
+                }
+
                 // Header
                 Text(
                     text = buildAnnotatedString {
