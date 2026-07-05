@@ -1,0 +1,7 @@
+{
+  "primaryApi": "https://www.tikwm.com/",
+  "fallbackApi1": "https://tdownv4.sl-bjs.workers.dev/",
+  "fallbackApi2": "https://api.douyin.wtf/",
+  "slideshowDuration": 4.0,
+  "minImagesForSlideshow": 3
+}
