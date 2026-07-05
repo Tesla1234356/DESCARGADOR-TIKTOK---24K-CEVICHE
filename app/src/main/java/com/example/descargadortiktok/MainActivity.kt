@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.material.icons.Icons
@@ -89,7 +91,7 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Animación RGB Glow (Aro Neón giratorio)
+                // Animación RGB Glow (Contorno rotatorio)
                 val infiniteTransition = rememberInfiniteTransition(label = "rgbGlow")
                 val angle by infiniteTransition.animateFloat(
                     initialValue = 0f,
@@ -109,29 +111,53 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     contentAlignment = Alignment.Center
                 ) {
                     Box(
-                        modifier = Modifier
-                            .size(190.dp)
-                            .drawBehind {
-                                rotate(angle) {
-                                    drawCircle(
-                                        brush = Brush.sweepGradient(
-                                            colors = listOf(
-                                                Color(0xFFFF004D), // Rosa TikTok
-                                                Color(0xFFB100FF), // Morado
-                                                Color(0xFF00E5FF), // Cyan TikTok
-                                                Color(0xFF00FF44), // Verde Neón
-                                                Color(0xFFFFFF00), // Amarillo
-                                                Color(0xFFFF004D)  // Cierra con Rosa
-                                            )
-                                        ),
-                                        radius = size.width / 2,
-                                        style = Stroke(width = 8.dp.toPx())
-                                    )
-                                }
-                            },
+                        modifier = Modifier.size(190.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        // Imagen original encima del aro RGB (sin recortes)
+                        // Borde RGB que sigue el contorno exacto del PNG con múltiples colores a la vez
+                        Box(
+                            modifier = Modifier
+                                .size(175.dp)
+                                .graphicsLayer { alpha = 0.99f } // Crea un buffer offscreen para poder aplicar BlendMode
+                                .drawWithContent {
+                                    drawContent() // Dibuja la máscara (las copias de la imagen desplazadas)
+                                    // Dibuja el gradiente encima, aplicándose SOLO donde hay pixeles dibujados gracias al SrcIn
+                                    rotate(angle) {
+                                        drawCircle(
+                                            brush = Brush.sweepGradient(
+                                                colors = listOf(
+                                                    Color(0xFFFF004D), // Rosa TikTok
+                                                    Color(0xFFB100FF), // Morado
+                                                    Color(0xFF00E5FF), // Cyan TikTok
+                                                    Color(0xFF00FF44), // Verde Neón
+                                                    Color(0xFFFFFF00), // Amarillo
+                                                    Color(0xFFFF004D)  // Cierra con Rosa
+                                                )
+                                            ),
+                                            radius = size.width, // Suficientemente grande para que no se corte al rotar
+                                            blendMode = BlendMode.SrcIn
+                                        )
+                                    }
+                                }
+                        ) {
+                            // Construimos la forma del borde desplazando la imagen en 8 direcciones
+                            val offsets = listOf(
+                                Pair(-4, -4), Pair(0, -5), Pair(4, -4),
+                                Pair(-5, 0),               Pair(5, 0),
+                                Pair(-4, 4),  Pair(0, 5),  Pair(4, 4)
+                            )
+                            for (offset in offsets) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .offset(x = offset.first.dp, y = offset.second.dp)
+                                )
+                            }
+                        }
+                        
+                        // Imagen original encima (sin afectar por el gradiente)
                         Image(
                             painter = painterResource(id = R.drawable.icono_24k_ceviche),
                             contentDescription = "24K Ceviche",
