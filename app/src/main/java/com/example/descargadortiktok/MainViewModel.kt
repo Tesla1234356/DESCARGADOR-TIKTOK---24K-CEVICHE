@@ -139,9 +139,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             
             val isSlideshow = !videoData.images.isNullOrEmpty()
             
+            // Verificamos si la URL de 'play' es en realidad un archivo de audio (a veces la API devuelve el audio en 'play' para carruseles)
+            val isPlayUrlAudio = !videoData.play.isNullOrBlank() && 
+                (videoData.play == videoData.music || 
+                 videoData.play.contains("music", ignoreCase = true) || 
+                 videoData.play.endsWith(".mp3", ignoreCase = true) || 
+                 videoData.play.endsWith(".m4a", ignoreCase = true))
+
             // Intento 1: Si es carrusel de fotos y se quiere descargar como video,
             // primero intentamos descargar el video pre-renderizado del servidor para conservar las animaciones originales de TikTok.
-            if (isSlideshow && type == DownloadType.VIDEO && !videoData.play.isNullOrBlank()) {
+            // OJO: Solo si la URL de 'play' es un video real (no debe apuntar al audio).
+            if (isSlideshow && type == DownloadType.VIDEO && !videoData.play.isNullOrBlank() && !isPlayUrlAudio) {
                 val fileName = "tiktok_${videoData.id}.mp4"
                 val result = downloader.downloadMedia(
                     url = videoData.play,
