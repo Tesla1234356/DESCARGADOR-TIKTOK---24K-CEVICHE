@@ -15,6 +15,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        // Cambiar el nombre del APK generado (ej. TikTokPro_24KCeviche-debug.apk)
+        setProperty("archivesBaseName", "TikTokPro_24KCeviche")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
