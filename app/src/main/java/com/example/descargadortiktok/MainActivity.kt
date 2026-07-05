@@ -66,24 +66,11 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.icono_24k_ceviche),
-                            contentDescription = "24K Ceviche",
-                            modifier = Modifier.size(36.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            "TIKTOK PRO",
-                            fontWeight = FontWeight.Black,
-                            fontSize = 16.sp,
-                            letterSpacing = 3.sp,
-                            color = Color.White
-                        )
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                        contentDescription = "24K Ceviche",
+                        modifier = Modifier.size(38.dp)
+                    )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF0F0F12),
@@ -120,33 +107,22 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Header / Logo
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
-                        contentDescription = "24K Ceviche Logo",
-                        modifier = Modifier.size(42.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = Color(0xFFFE2C55), fontWeight = FontWeight.Black)) {
-                                append("Tik")
-                            }
-                            withStyle(style = SpanStyle(color = Color(0xFF25F4EE), fontWeight = FontWeight.Black)) {
-                                append("Tok")
-                            }
-                            withStyle(style = SpanStyle(color = Color.White, fontWeight = FontWeight.Bold)) {
-                                append(" Pro")
-                            }
-                        },
-                        fontSize = 28.sp
-                    )
-                }
+                // Header
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = Color(0xFFFE2C55), fontWeight = FontWeight.Black)) {
+                            append("Tik")
+                        }
+                        withStyle(style = SpanStyle(color = Color(0xFF25F4EE), fontWeight = FontWeight.Black)) {
+                            append("Tok")
+                        }
+                        withStyle(style = SpanStyle(color = Color.White, fontWeight = FontWeight.Bold)) {
+                            append(" Pro")
+                        }
+                    },
+                    fontSize = 32.sp,
+                    modifier = Modifier.padding(top = 28.dp, bottom = 8.dp)
+                )
 
                 Text(
                     text = "Descarga sin marcas de agua al instante",
@@ -228,9 +204,19 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                         .height(56.dp)
                         .graphicsLayer(alpha = buttonAlpha)
                         .clip(RoundedCornerShape(18.dp))
+                        .border(
+                            width = 1.dp,
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.White.copy(alpha = 0.5f), Color.White.copy(alpha = 0.05f))
+                            ),
+                            shape = RoundedCornerShape(18.dp)
+                        )
                         .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(Color(0xFFFE2C55), Color(0xFFE91E63), Color(0xFF25F4EE))
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFFFE2C55).copy(alpha = 0.35f),
+                                    Color(0xFF25F4EE).copy(alpha = 0.15f)
+                                )
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
@@ -319,9 +305,19 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                                         .fillMaxWidth()
                                         .height(52.dp)
                                         .clip(RoundedCornerShape(14.dp))
+                                        .border(
+                                            width = 1.dp,
+                                            brush = Brush.verticalGradient(
+                                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
+                                            ),
+                                            shape = RoundedCornerShape(14.dp)
+                                        )
                                         .background(
-                                            Brush.horizontalGradient(
-                                                colors = listOf(Color(0xFFFE2C55), Color(0xFF25F4EE))
+                                            Brush.verticalGradient(
+                                                colors = listOf(
+                                                    Color(0xFFFE2C55).copy(alpha = 0.25f),
+                                                    Color(0xFF25F4EE).copy(alpha = 0.15f)
+                                                )
                                             )
                                         ),
                                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
@@ -515,11 +511,21 @@ fun VideoInfoCard(
                     onClick = { viewModel.startDownload(DownloadType.VIDEO) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .height(52.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .border(
+                            width = 1.dp,
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
+                            ),
+                            shape = RoundedCornerShape(14.dp)
+                        )
                         .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(Color(0xFFFE2C55), Color(0xFFE91E63))
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFFFE2C55).copy(alpha = 0.3f),
+                                    Color(0xFFE91E63).copy(alpha = 0.12f)
+                                )
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
@@ -530,17 +536,27 @@ fun VideoInfoCard(
                     Text(label, fontWeight = FontWeight.Bold, color = Color.White)
                 }
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
                     onClick = { viewModel.startDownload(DownloadType.AUDIO) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .height(52.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .border(
+                            width = 1.dp,
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
+                            ),
+                            shape = RoundedCornerShape(14.dp)
+                        )
                         .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(Color(0xFF1E88E5), Color(0xFF25F4EE))
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFF1E88E5).copy(alpha = 0.3f),
+                                    Color(0xFF25F4EE).copy(alpha = 0.12f)
+                                )
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
