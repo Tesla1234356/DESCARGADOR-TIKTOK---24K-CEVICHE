@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -65,13 +66,24 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        "TIKTOK 24K CEVICHE",
-                        fontWeight = FontWeight.Black,
-                        fontSize = 16.sp,
-                        letterSpacing = 3.sp,
-                        color = Color.White
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                            contentDescription = "24K Ceviche",
+                            modifier = Modifier.size(36.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            "TIKTOK PRO",
+                            fontWeight = FontWeight.Black,
+                            fontSize = 16.sp,
+                            letterSpacing = 3.sp,
+                            color = Color.White
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF0F0F12),
@@ -114,13 +126,12 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.MusicNote,
-                        contentDescription = null,
-                        tint = Color(0xFFFE2C55),
-                        modifier = Modifier.size(36.dp)
+                    Image(
+                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                        contentDescription = "24K Ceviche Logo",
+                        modifier = Modifier.size(42.dp)
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = buildAnnotatedString {
                             withStyle(style = SpanStyle(color = Color(0xFFFE2C55), fontWeight = FontWeight.Black)) {
@@ -534,12 +545,7 @@ fun VideoInfoCard(
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(22.dp)
-                    )
+                    Icon(Icons.Default.MusicNote, contentDescription = null, tint = Color.White)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Descargar Solo Música (.MP3)", fontWeight = FontWeight.Bold, color = Color.White)
                 }
