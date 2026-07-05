@@ -89,13 +89,13 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp, bottom = 8.dp),
+                        .padding(top = 32.dp, bottom = 16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.icono_24k_ceviche),
                         contentDescription = "24K Ceviche",
-                        modifier = Modifier.size(110.dp)
+                        modifier = Modifier.size(150.dp)
                     )
                     
                     if (viewModel.downloadState !is DownloadState.Idle) {
@@ -118,7 +118,7 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                             append("Tok")
                         }
                         withStyle(style = SpanStyle(color = Color.White, fontWeight = FontWeight.Bold)) {
-                            append(" Pro")
+                            append(" Downloader")
                         }
                     },
                     fontSize = 32.sp,
@@ -567,4 +567,4 @@ fun StatusCard(message: String, isError: Boolean) {
             )
         }
     }
-}
+}
