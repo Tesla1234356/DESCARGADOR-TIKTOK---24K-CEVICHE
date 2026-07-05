@@ -163,7 +163,8 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                         cursorColor = Color(0xFF25F4EE),
                         focusedContainerColor = Color(0xFF1A1A22),
                         unfocusedContainerColor = Color(0xFF131318),
-                        placeholderColor = Color(0xFF86878B)
+                        focusedPlaceholderColor = Color(0xFF86878B),
+                        unfocusedPlaceholderColor = Color(0xFF86878B)
                     ),
                     leadingIcon = {
                         Icon(
