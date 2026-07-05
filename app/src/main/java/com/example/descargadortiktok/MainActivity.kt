@@ -204,19 +204,9 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                         .height(56.dp)
                         .graphicsLayer(alpha = buttonAlpha)
                         .clip(RoundedCornerShape(18.dp))
-                        .border(
-                            width = 1.dp,
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.White.copy(alpha = 0.5f), Color.White.copy(alpha = 0.05f))
-                            ),
-                            shape = RoundedCornerShape(18.dp)
-                        )
                         .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFFFE2C55).copy(alpha = 0.35f),
-                                    Color(0xFF25F4EE).copy(alpha = 0.15f)
-                                )
+                            Brush.horizontalGradient(
+                                colors = listOf(Color(0xFFFE2C55), Color(0xFFE91E63), Color(0xFF25F4EE))
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
@@ -305,19 +295,9 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                                         .fillMaxWidth()
                                         .height(52.dp)
                                         .clip(RoundedCornerShape(14.dp))
-                                        .border(
-                                            width = 1.dp,
-                                            brush = Brush.verticalGradient(
-                                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
-                                            ),
-                                            shape = RoundedCornerShape(14.dp)
-                                        )
                                         .background(
-                                            Brush.verticalGradient(
-                                                colors = listOf(
-                                                    Color(0xFFFE2C55).copy(alpha = 0.25f),
-                                                    Color(0xFF25F4EE).copy(alpha = 0.15f)
-                                                )
+                                            Brush.horizontalGradient(
+                                                colors = listOf(Color(0xFFFE2C55), Color(0xFF25F4EE))
                                             )
                                         ),
                                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
@@ -511,21 +491,11 @@ fun VideoInfoCard(
                     onClick = { viewModel.startDownload(DownloadType.VIDEO) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(52.dp)
-                        .clip(RoundedCornerShape(14.dp))
-                        .border(
-                            width = 1.dp,
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
-                            ),
-                            shape = RoundedCornerShape(14.dp)
-                        )
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(12.dp))
                         .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFFFE2C55).copy(alpha = 0.3f),
-                                    Color(0xFFE91E63).copy(alpha = 0.12f)
-                                )
+                            Brush.horizontalGradient(
+                                colors = listOf(Color(0xFFFE2C55), Color(0xFFE91E63))
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
@@ -536,27 +506,17 @@ fun VideoInfoCard(
                     Text(label, fontWeight = FontWeight.Bold, color = Color.White)
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Button(
                     onClick = { viewModel.startDownload(DownloadType.AUDIO) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(52.dp)
-                        .clip(RoundedCornerShape(14.dp))
-                        .border(
-                            width = 1.dp,
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.White.copy(alpha = 0.4f), Color.White.copy(alpha = 0.05f))
-                            ),
-                            shape = RoundedCornerShape(14.dp)
-                        )
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(12.dp))
                         .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFF1E88E5).copy(alpha = 0.3f),
-                                    Color(0xFF25F4EE).copy(alpha = 0.12f)
-                                )
+                            Brush.horizontalGradient(
+                                colors = listOf(Color(0xFF1E88E5), Color(0xFF25F4EE))
                             )
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
