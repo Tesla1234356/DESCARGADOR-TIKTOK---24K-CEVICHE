@@ -36,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.example.descargadortiktok.downloader.DownloadType
 import com.example.descargadortiktok.network.models.VideoData
@@ -533,7 +534,12 @@ fun VideoInfoCard(
                         ),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                 ) {
-                    Icon(Icons.Default.MusicNote, contentDescription = null, tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(22.dp)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Descargar Solo Música (.MP3)", fontWeight = FontWeight.Bold, color = Color.White)
                 }
