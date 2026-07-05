@@ -69,7 +69,7 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     Image(
                         painter = painterResource(id = R.drawable.icono_24k_ceviche),
                         contentDescription = "24K Ceviche",
-                        modifier = Modifier.size(38.dp)
+                        modifier = Modifier.size(76.dp)
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(

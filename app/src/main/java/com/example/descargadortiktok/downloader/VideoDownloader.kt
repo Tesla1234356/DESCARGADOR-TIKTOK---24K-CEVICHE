@@ -128,12 +128,7 @@ class VideoDownloader(private val context: Context) {
             
             images.forEachIndexed { index, _ ->
                 inputs.append("-loop 1 -t ${imageDuration + transitionDuration} -i \"${imageFiles[index].absolutePath}\" ")
-                
-                // Efecto Dinámico (Zoom-in / Ken Burns effect) para darle movimiento a las fotos
-                val frames = ((imageDuration + transitionDuration) * 25).toInt()
-                val zoomFilter = "scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2,zoompan=z='min(zoom+0.0015,1.15)':d=$frames:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=720x1280:fps=25,format=yuv420p"
-                
-                filterComplex.append("[$index:v]$zoomFilter[v$index];")
+                filterComplex.append("[$index:v]scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2,setsar=1,format=yuv420p[v$index];")
             }
             inputs.append("-i \"${audioFile.absolutePath}\" ")
 
