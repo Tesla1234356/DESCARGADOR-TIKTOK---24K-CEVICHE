@@ -138,8 +138,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             progress = 0f
             
             val isSlideshow = !videoData.images.isNullOrEmpty()
-            val downloadType = if (isSlideshow && type == DownloadType.VIDEO) DownloadType.SLIDESHOW else type
             
+            // Intento 1: Si es carrusel de fotos y se quiere descargar como video,
+            // primero intentamos descargar el video pre-renderizado del servidor para conservar las animaciones originales de TikTok.
+            if (isSlideshow && type == DownloadType.VIDEO && !videoData.play.isNullOrBlank()) {
+                val fileName = "tiktok_${videoData.id}.mp4"
+                val result = downloader.downloadMedia(
+                    url = videoData.play,
+                    fileName = fileName,
+                    type = DownloadType.VIDEO,
+                    onProgress = { p ->
+                        progress = p
+                        downloadState = DownloadState.Downloading(p, type)
+                    }
+                )
+                
+                if (result.isSuccess) {
+                    downloadState = DownloadState.Success("Archivo guardado en la galería")
+                    return@launch
+                }
+                
+                // Fallback: Si la descarga del video animado del servidor falla por cualquier razón,
+                // procedemos a reconstruirlo localmente con FFmpeg (que ya funciona de manera normal).
+                println("DEBUG_DOWNLOAD: Falló la descarga del video pre-renderizado, usando fallback de FFmpeg local")
+            }
+            
+            val downloadType = if (isSlideshow && type == DownloadType.VIDEO) DownloadType.SLIDESHOW else type
             val url = if (type == DownloadType.VIDEO) videoData.play else videoData.music
             val extension = if (type == DownloadType.VIDEO) ".mp4" else ".mp3"
             val fileName = "tiktok_${videoData.id}$extension"
