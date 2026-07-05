@@ -14,7 +14,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -85,18 +89,56 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Animación RGB Glow
+                val infiniteTransition = rememberInfiniteTransition(label = "rgbGlow")
+                val angle by infiniteTransition.animateFloat(
+                    initialValue = 0f,
+                    targetValue = 360f,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(3000, easing = LinearEasing),
+                        repeatMode = RepeatMode.Restart
+                    ),
+                    label = "angle"
+                )
+
                 // Custom Top Header Libre de Recortes
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp, bottom = 16.dp),
+                        .padding(top = 32.dp, bottom = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icono_24k_ceviche),
-                        contentDescription = "24K Ceviche",
-                        modifier = Modifier.size(150.dp)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .size(190.dp)
+                            .drawBehind {
+                                rotate(angle) {
+                                    drawCircle(
+                                        brush = Brush.sweepGradient(
+                                            colors = listOf(
+                                                Color(0xFFFF004D), // Rosa TikTok
+                                                Color(0xFFB100FF), // Morado
+                                                Color(0xFF00E5FF), // Cyan TikTok
+                                                Color(0xFF00FF44), // Verde Neón
+                                                Color(0xFFFFFF00), // Amarillo
+                                                Color(0xFFFF004D)  // Cierra con Rosa
+                                            )
+                                        ),
+                                        radius = size.width / 2,
+                                        style = Stroke(width = 8.dp.toPx())
+                                    )
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.icono_24k_ceviche),
+                            contentDescription = "24K Ceviche",
+                            modifier = Modifier
+                                .size(175.dp)
+                                .clip(CircleShape)
+                        )
+                    }
                     
                     if (viewModel.downloadState !is DownloadState.Idle) {
                         IconButton(
@@ -122,7 +164,7 @@ fun TikTokDownloaderScreen(viewModel: MainViewModel = viewModel()) {
                         }
                     },
                     fontSize = 32.sp,
-                    modifier = Modifier.padding(top = 28.dp, bottom = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
                 )
 
                 Text(
